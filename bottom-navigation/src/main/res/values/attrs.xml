@@ -27,6 +27,13 @@
         <!-- item disabled color -->
         <attr name="bbn_itemColorDisabled" format="color" />
 
+        <!-- labels color -->
+        <attr name="bbn_itemLabelColorActive" format="color" />
+
+        <attr name="bbn_itemLabelColorInactive" format="color" />
+
+        <attr name="bbn_itemLabelColorDisabled" format="color" />
+
         <!-- force fixed behavior and always display item labels -->
         <!-- default implementation is false and the labels are -->
         <!-- shown only if there are less than 4 items in the menu -->

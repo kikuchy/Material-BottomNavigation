@@ -31,6 +31,9 @@ class MenuParser {
         private int rippleColor;
         private int colorInactive;
         private int colorDisabled;
+        private int labelColorActive;
+        private int labelColorInctive;
+        private int labelColorDisable;
         private int itemAnimationDuration;
         private boolean shifting;
         private boolean tablet;
@@ -97,6 +100,27 @@ class MenuParser {
                 colorDisabled = Color.argb(Color.alpha(color) / 2, Color.red(color), Color.green(color), Color.blue(color));
             }
             return colorDisabled;
+        }
+
+        public int getLabelColorActive() {
+            if (0 == labelColorActive) {
+                labelColorActive = getColorActive();
+            }
+            return labelColorActive;
+        }
+
+        public int getLabelColorInctive() {
+            if (0 == labelColorInctive) {
+                labelColorInctive = getColorInactive();
+            }
+            return labelColorInctive;
+        }
+
+        public int getLabelColorDisable() {
+            if (0 == labelColorDisable) {
+                labelColorDisable = getColorDisabled();
+            }
+            return labelColorDisable;
         }
 
         public int getRippleColor() {
@@ -200,6 +224,9 @@ class MenuParser {
         menu.colorActive = a.getColor(R.styleable.BottomNavigationMenu_bbn_itemColorActive, 0);
         menu.badgeColor = a.getColor(R.styleable.BottomNavigationMenu_bbn_badgeColor, Color.RED);
         menu.forceFixed = a.getBoolean(R.styleable.BottomNavigationMenu_bbn_alwaysShowLabels, false);
+        menu.labelColorActive = a.getColor(R.styleable.BottomNavigationMenu_bbn_itemLabelColorActive, 0);
+        menu.labelColorInctive = a.getColor(R.styleable.BottomNavigationMenu_bbn_itemLabelColorInactive, 0);
+        menu.labelColorDisable = a.getColor(R.styleable.BottomNavigationMenu_bbn_itemLabelColorDisabled, 0);
         a.recycle();
     }
 

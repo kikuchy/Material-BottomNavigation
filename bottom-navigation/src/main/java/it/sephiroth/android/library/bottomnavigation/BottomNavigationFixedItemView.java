@@ -31,6 +31,9 @@ public class BottomNavigationFixedItemView extends BottomNavigationItemViewAbstr
     private final int colorActive;
     private final int colorInactive;
     private final int colorDisabled;
+    private final int labelColorActive;
+    private final int labelColorInactive;
+    private final int labelColorDisabled;
 
     private final int paddingTopActive;
     private final int paddingTopInactive;
@@ -62,6 +65,9 @@ public class BottomNavigationFixedItemView extends BottomNavigationItemViewAbstr
         this.colorActive = menu.getColorActive();
         this.colorInactive = menu.getColorInactive();
         this.colorDisabled = menu.getColorDisabled();
+        this.labelColorActive = menu.getLabelColorActive();
+        this.labelColorInactive = menu.getLabelColorInctive();
+        this.labelColorDisabled = menu.getLabelColorDisable();
         this.centerY = paddingTopActive;
         this.canvasTextScale = expanded ? TEXT_SCALE_ACTIVE : 1f;
         this.iconTranslation = expanded ? 0 : (paddingTopInactive - paddingTopActive);
@@ -71,13 +77,16 @@ public class BottomNavigationFixedItemView extends BottomNavigationItemViewAbstr
         this.textPaint.setLinearText(true);
         this.textPaint.setSubpixelText(true);
         this.textPaint.setTextSize(textSizeInactive);
-        this.textPaint.setColor(expanded ? colorActive : colorInactive);
+        this.textPaint.setColor(expanded ? labelColorActive : labelColorInactive);
     }
 
     @Override
     public void setEnabled(final boolean enabled) {
         super.setEnabled(enabled);
-        this.textPaint.setColor(isExpanded() ? (enabled ? colorActive : colorDisabled) : (enabled ? colorInactive : colorDisabled));
+        this.textPaint.setColor(
+                isExpanded()
+                        ? (enabled ? labelColorActive : labelColorDisabled)
+                        : (enabled ? labelColorInactive : labelColorDisabled));
 
         if (null != icon) {
             updateLayoutOnAnimation(1, isExpanded());
@@ -121,9 +130,13 @@ public class BottomNavigationFixedItemView extends BottomNavigationItemViewAbstr
         final int srcColor = enabled ? (expanded ? colorInactive : colorActive) : colorDisabled;
         final int color = (Integer) evaluator.evaluate(fraction, srcColor, dstColor);
 
+        final int dstLabelColor = enabled ? (expanded ? labelColorActive : labelColorInactive) : labelColorDisabled;
+        final int srcLabelColor = enabled ? (expanded ? labelColorInactive : labelColorActive) : labelColorDisabled;
+        final int labelColor = (Integer) evaluator.evaluate(fraction, srcLabelColor, dstLabelColor);
+
         icon.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
         icon.setAlpha(Color.alpha(color));
-        textPaint.setColor(color);
+        textPaint.setColor(labelColor);
         ViewCompat.postInvalidateOnAnimation(this);
     }
 
